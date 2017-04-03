@@ -267,6 +267,8 @@ class Vk
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         // disable SSL verifying
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        // language
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept-Language: ru,en-us'));
         // $output contains the output string
         $result = curl_exec($ch);
         if (!$result) {
