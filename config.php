@@ -4,9 +4,9 @@ require "src/VkGroup.php";
 
 
 $config = [
-    'confirmation_token' => 'c845bea7',
-    'service_token'   => 'f55682c1f55682c1f55682c146f50b89abff556f55682c1ac0e41b0cd377e39cc46a642',
-    'access_token' => 'cfcb2705c1f5a289843ac8023aebf2871e16cae0193f07619adc3622dc1090d920b0c8a4ab9b15cbf5aa0',
+    'confirmation_token' => '',
+    'service_token'   => '',
+    'access_token' => '',
 
     'group_id'   => 149619624,
     'background' => 'background.jpg',
