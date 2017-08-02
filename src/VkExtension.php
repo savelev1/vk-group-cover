@@ -167,25 +167,29 @@ class VkExtension extends Vk
         $cover_src  = imagecreatefromjpeg('cover.jpg');
         $user_img = imagecreatefromjpeg($user->photo_200);
 
-        if ($options['shape'] == 'circle') {
-            $crop = new CircleCrop($user_img);
-            $user_img = $crop->crop()->get();
-        }
-
         list($width, $height)         = getimagesize($user->photo_200);
         list($new_width, $new_height) = getimagesize('cover.jpg');
 
-        $cover_dst = imagecreatetruecolor($new_width, $new_height);
-
-        $start_x = $options['position']['x'] - $options['radius'];
-        $start_y = $options['position']['y'] - $options['radius'];
         $out_width = $options['radius'] * 2;
         $out_height = $options['radius'] * 2;
+        $user_dst = imagecreatetruecolor($out_width, $out_height);
+        imagecopyresampled($user_dst, $user_img, 0, 0, 0, 0, $out_width, $out_height, $width, $height);
+
+        $cover_dst = imagecreatetruecolor($new_width, $new_height);
 
         // put background
         imagecopyresampled($cover_dst, $cover_src, 0, 0, 0, 0, $new_width, $new_height, $new_width, $new_height);
+
+        if ($options['shape'] == 'circle') {
+            $crop = new CircleCrop($user_dst);
+            $user_dst = $crop->crop()->get();
+        }
+
+        $start_x = $options['position']['x'] - $options['radius'];
+        $start_y = $options['position']['y'] - $options['radius'];
+
         // put avatar
-        imagecopymerge($cover_dst, $user_img, $start_x, $start_y, 0, 0, $out_width, $out_height, 100);
+        imagecopymerge($cover_dst, $user_dst, $start_x, $start_y, 0, 0, $out_width, $out_height, 100);
 
         $first_name = $user->first_name;
         $last_name  = $user->last_name;
